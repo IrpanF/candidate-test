@@ -3,64 +3,67 @@
 namespace App\Http\Controllers;
 
 use App\Models\Layer;
+use App\Models\Layup;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class LayerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $layers = Layer::with('layup')->latest()->get();
+
+        return view('layers.index', compact('layers'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $layups = Layup::all();
+
+        return view('layers.create', compact('layups'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'layup_id' => 'required',
+            'layer_order' => 'required|integer',
+            'thickness' => 'required|numeric',
+            'width' => 'required|numeric',
+            'angle' => 'required|numeric',
+        ]);
+
+        Layer::create($request->all());
+
+        return redirect()->route('layers.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Layer $layer)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Layer $layer)
     {
-        //
+        $layups = Layup::all();
+
+        return view('layers.edit', compact('layer', 'layups'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Layer $layer)
     {
-        //
+        $request->validate([
+            'layup_id' => 'required',
+            'layer_order' => 'required|integer',
+            'thickness' => 'required|numeric',
+            'width' => 'required|numeric',
+            'angle' => 'required|numeric',
+        ]);
+
+        $layer->update($request->all());
+
+        return redirect()->route('layers.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Layer $layer)
     {
-        //
+        $layer->delete();
+
+        return redirect()->route('layers.index');
     }
 }
