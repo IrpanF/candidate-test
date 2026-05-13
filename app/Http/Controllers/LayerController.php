@@ -13,7 +13,9 @@ class LayerController extends Controller
 {
     public function index()
     {
-        $layers = Layer::with('layup')->latest()->get();
+        $layers = Layer::with('layup')
+            ->latest()
+            ->get();
 
         return view('layers.index', compact('layers'));
     }

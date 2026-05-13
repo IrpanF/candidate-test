@@ -2,81 +2,162 @@
 
 @section('content')
 
-<div class="max-w-5xl mx-auto bg-white p-6 rounded-lg shadow">
+<div class="flex items-center justify-between mb-8">
 
-    <div class="flex justify-between items-center mb-6">
+    <div>
 
-        <h1 class="text-3xl font-bold">
+        <h1 class="text-3xl font-bold text-gray-800">
             Layers
         </h1>
 
-        <a
-            href="{{ route('layers.create') }}"
-            class="bg-blue-500 text-white px-4 py-2 rounded"
-        >
-            Add Layer
-        </a>
+        <p class="text-gray-500 mt-1">
+            Manage CLT layer configurations.
+        </p>
 
     </div>
 
-    @foreach($layers as $layer)
+    <a
+        href="{{ route('layers.create') }}"
+        class="bg-green-700 hover:bg-green-800 text-white px-5 py-3 rounded-lg font-medium transition"
+    >
+        + Add Layer
+    </a>
 
-        <div class="border p-4 rounded mb-4">
+</div>
 
-            <h2 class="text-xl font-semibold">
-                Layer Order: {{ $layer->layer_order }}
-            </h2>
+@if(session('success'))
 
-            <p>
-                Layup:
-                {{ $layer->layup->name }}
-            </p>
+    <div class="bg-green-100 border border-green-200 text-green-700 p-4 rounded-lg mb-6">
 
-            <p>
-                Thickness:
-                {{ $layer->thickness }}
-            </p>
+        {{ session('success') }}
 
-            <p>
-                Width:
-                {{ $layer->width }}
-            </p>
+    </div>
 
-            <p>
-                Angle:
-                {{ $layer->angle }}
-            </p>
+@endif
 
-            <div class="mt-4 flex gap-2">
+<div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
 
-                <a
-                    href="{{ route('layers.edit', $layer) }}"
-                    class="bg-yellow-500 text-white px-3 py-1 rounded"
-                >
-                    Edit
-                </a>
+    <table class="w-full">
 
-                <form
-                    action="{{ route('layers.destroy', $layer) }}"
-                    method="POST"
-                >
-                    @csrf
-                    @method('DELETE')
+        <thead class="bg-gray-50 text-gray-500 text-sm uppercase">
 
-                    <button
-                        type="submit"
-                        class="bg-red-500 text-white px-3 py-1 rounded"
-                    >
-                        Delete
-                    </button>
+            <tr>
 
-                </form>
+                <th class="text-left px-6 py-4">
+                    Order
+                </th>
 
-            </div>
+                <th class="text-left px-6 py-4">
+                    Layup
+                </th>
 
-        </div>
+                <th class="text-left px-6 py-4">
+                    Thickness
+                </th>
 
-    @endforeach
+                <th class="text-left px-6 py-4">
+                    Width
+                </th>
+
+                <th class="text-left px-6 py-4">
+                    Angle
+                </th>
+
+                <th class="text-left px-6 py-4">
+                    Actions
+                </th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            @forelse($layers as $layer)
+
+                <tr class="border-t border-gray-100 hover:bg-gray-50 transition">
+
+                    <td class="px-6 py-5 font-semibold">
+
+                        #{{ $layer->layer_order }}
+
+                    </td>
+
+                    <td class="px-6 py-5 text-gray-600">
+
+                        {{ $layer->layup->name }}
+
+                    </td>
+
+                    <td class="px-6 py-5">
+
+                        {{ $layer->thickness }}
+
+                    </td>
+
+                    <td class="px-6 py-5">
+
+                        {{ $layer->width }}
+
+                    </td>
+
+                    <td class="px-6 py-5">
+
+                        {{ $layer->angle }}°
+
+                    </td>
+
+                    <td class="px-6 py-5">
+
+                        <div class="flex flex-wrap gap-2">
+
+                            <a
+                                href="{{ route('layers.edit', $layer) }}"
+                                class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg text-sm"
+                            >
+                                Edit
+                            </a>
+
+                            <form
+                                action="{{ route('layers.destroy', $layer) }}"
+                                method="POST"
+                            >
+
+                                @csrf
+                                @method('DELETE')
+
+                                <button
+                                    type="submit"
+                                    class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm"
+                                >
+                                    Delete
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            @empty
+
+                <tr>
+
+                    <td colspan="6" class="text-center py-10 text-gray-500">
+
+                        No layers found.
+
+                    </td>
+
+                </tr>
+
+            @endforelse
+
+        </tbody>
+
+    </table>
 
 </div>
 

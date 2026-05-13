@@ -1,85 +1,121 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="en">
 <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
 
-    <title>CLT Toolbox Assignment</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="preconnect" href="https://fonts.bunny.net">
+    @vite([
+        'resources/css/app.css',
+        'resources/js/app.js'
+    ])
 
-    <link
-        href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap"
-        rel="stylesheet"
-    />
-
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <title>CLT Layup Manager</title>
 
 </head>
 
-<body class="font-sans antialiased text-black">
+<body class="bg-[#F5F7F6] min-h-screen text-gray-800">
 
-<div class="relative min-h-screen">
+    <!-- NAVBAR -->
+    <nav class="bg-white border-b border-gray-200">
 
-    <!-- Background -->
-    <img
-        class="absolute inset-0 h-full w-full object-cover"
-        src="https://app.clttoolbox.com.au/images/login-bg.jpg"
-        alt="Background"
-    >
+        <div class="max-w-7xl mx-auto px-8">
 
-    <!-- Overlay -->
-    <div class="absolute inset-0 bg-black/70"></div>
+            <div class="flex items-center justify-between h-20">
 
-    <!-- Content -->
-    <div class="relative z-10 min-h-screen">
+                <!-- LEFT -->
+                <div class="flex items-center gap-12">
 
-        <!-- Navbar -->
-        <nav class="p-6 border-b border-white/20 backdrop-blur-md">
+                    <!-- LOGO -->
+                    <div class="flex items-center gap-3">
 
-            <div class="max-w-7xl mx-auto flex gap-4 items-center">
+                        <div class="w-11 h-11 rounded-xl bg-green-700 flex items-center justify-center text-white text-xl font-bold shadow">
 
-                <img
-                    src="https://app.clttoolbox.com.au/images/logos/logo_color_white.png"
-                    class="h-10"
-                >
-                    <br>
-                <a
-                    href="/suppliers"
-                    class="hover:text-yellow-400 transition text-white"
-                >
-                    Suppliers
-                </a>
+                            T
 
-                <a
-                    href="/layups"
-                    class="hover:text-yellow-400 transition text-white"
-                >
-                    Layups
-                </a>
+                        </div>
 
-                <a
-                    href="/layers"
-                    class="hover:text-yellow-400 transition text-white"
-                >
-                    Layers
-                </a>
+                        <div>
+
+                            <h1 class="font-bold text-lg text-gray-800">
+                                CLT Layup
+                            </h1>
+
+                            <p class="text-xs text-gray-500">
+                                Manager
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <!-- MENU -->
+                    <div class="flex items-center gap-8">
+
+                        <a
+                            href="/suppliers"
+                            class="text-gray-600 hover:text-green-700 font-medium transition"
+                        >
+                            Suppliers
+                        </a>
+
+                        <a
+                            href="/layups"
+                            class="text-gray-600 hover:text-green-700 font-medium transition"
+                        >
+                            Layups
+                        </a>
+
+                        <a
+                            href="/layers"
+                            class="text-gray-600 hover:text-green-700 font-medium transition"
+                        >
+                            Layers
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <!-- RIGHT -->
+                <div class="flex items-center gap-4">
+
+                    <div class="text-right">
+
+                        <p class="font-medium">
+                            Irfan Fauzi
+                        </p>
+
+                        <p class="text-sm text-gray-500">
+                            Backend Developer Candidate
+                        </p>
+
+                    </div>
+
+                    <div class="w-11 h-11 rounded-full bg-green-100 flex items-center justify-center text-green-700 font-bold">
+
+                        IF
+
+                    </div>
+
+                </div>
 
             </div>
 
-        </nav>
+        </div>
 
-        <!-- Page Content -->
-        <main class="p-10">
+    </nav>
 
-            @yield('content')
+    <!-- CONTENT -->
+    <main class="max-w-7xl mx-auto px-8 py-10">
 
-        </main>
+        @yield('content')
 
-    </div>
-
-</div>
+    </main>
 
 </body>
 </html>

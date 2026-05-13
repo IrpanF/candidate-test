@@ -13,7 +13,10 @@ class LayupController extends Controller
 {
     public function index()
     {
-        $layups = Layup::with('supplier')->latest()->get();
+        $layups = Layup::with([
+            'supplier',
+            'layers'
+        ])->latest()->get();
 
         return view('layups.index', compact('layups'));
     }
