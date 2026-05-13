@@ -21,6 +21,46 @@
         </a>
     </div>
 
+    @if(session('success'))
+
+        <div class="bg-green-100 text-green-700 p-4 rounded mb-4">
+            {{ session('success') }}
+        </div>
+
+    @endif
+
+    <div class="mb-6 bg-gray-100 p-4 rounded">
+
+        <h2 class="text-xl font-bold mb-4">
+            Import Supplier JSON
+        </h2>
+
+        <form
+            action="{{ route('suppliers.import') }}"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            @csrf
+
+            <input
+                type="file"
+                name="json_file"
+                class="mb-4"
+                required
+            >
+
+            <button
+                type="submit"
+                class="bg-green-500 text-white px-4 py-2 rounded"
+            >
+                Import JSON
+            </button>
+
+        </form>
+
+    </div>
+
     @foreach($suppliers as $supplier)
 
         <div class="border p-4 rounded mb-4">
