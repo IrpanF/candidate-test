@@ -3,64 +3,63 @@
 namespace App\Http\Controllers;
 
 use App\Models\Layup;
+use App\Models\Supplier;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class LayupController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $layups = Layup::with('supplier')->latest()->get();
+
+        return view('layups.index', compact('layups'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $suppliers = Supplier::all();
+
+        return view('layups.create', compact('suppliers'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'supplier_id' => 'required',
+            'name' => 'required',
+            'description' => 'nullable'
+        ]);
+
+        Layup::create($request->all());
+
+        return redirect()->route('layups.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Layup $layup)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Layup $layup)
     {
-        //
+        $suppliers = Supplier::all();
+
+        return view('layups.edit', compact('layup', 'suppliers'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Layup $layup)
     {
-        //
+        $request->validate([
+            'supplier_id' => 'required',
+            'name' => 'required',
+            'description' => 'nullable'
+        ]);
+
+        $layup->update($request->all());
+
+        return redirect()->route('layups.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Layup $layup)
     {
-        //
+        $layup->delete();
+
+        return redirect()->route('layups.index');
     }
 }
