@@ -1,38 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Services;
 
-use App\Http\Controllers\Controller;
 use App\Models\Supplier;
 use App\Models\Layup;
 use App\Models\Layer;
-use App\Services\ImportSupplierService;
-use Illuminate\Http\Request;
 
-class SupplierTransferController extends Controller
+class ImportSupplierService
 {
-    protected ImportSupplierService $importService;
-
-    public function __construct(
-        ImportSupplierService $importService
-    )
+    public function handle($request)
     {
-        $this->importService = $importService;
-    }
-
-    public function export(Supplier $supplier)
-    {
-        $supplier->load('layups.layers');
-
-        return response()->json($supplier);
-    }
-
-    public function import(Request $request)
-    {
-        $request->validate([
-            'json_file' => 'required|file|mimes:json'
-        ]);
-
         $json = file_get_contents(
             $request->file('json_file')->getRealPath()
         );
@@ -71,7 +48,6 @@ class SupplierTransferController extends Controller
 
                     if ($conflict) {
 
-                        // OVERWRITE STRATEGY
                         $existingLayer->update([
                             'thickness' => $layerData['thickness'],
                             'width' => $layerData['width'],
@@ -88,13 +64,8 @@ class SupplierTransferController extends Controller
                         'width' => $layerData['width'],
                         'angle' => $layerData['angle'],
                     ]);
-
                 }
             }
         }
-
-        return redirect()
-            ->route('suppliers.index')
-            ->with('success', 'Import successful.');
     }
 }

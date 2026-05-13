@@ -1,155 +1,140 @@
-# Feature Test Assignment
+# CLT Toolbox Backend Feature Test
 
-## 1. Instructions
+Backend technical test submission for PT. CLT Toolbox Indonesia.
 
-- Clone or fork this repository.
-- Create a new branch: `{user}-assignment`.
-- Invite **@ikhsan017** and **@dhiaaziz** as collaborators.
-- Follow the setup instructions provided in the repository before running the project.
+---
 
-## 2. Feature Requirements
+# Completed Features
 
-### Core Features (Main Criteria)
+## Core Features
 
-- [ ] CRUD Suppliers
-- [ ] CRUD CLT Layups (nested under Supplier)
-- [ ] CRUD CLT Layers (nested under Layup)
+- [x] CRUD Suppliers
+- [x] CRUD CLT Layups
+- [x] CRUD CLT Layers
 
-The structure should properly reflect the hierarchy:
+Hierarchy:
 Supplier → Layups → Layers
 
-### Data Model (ERD)
+---
 
-Below is the Entity Relationship Diagram (ERD) representing the data structure:
+## Import / Export
 
-![ERD](./erd-new.png)
+- [x] Export Supplier with related Layups and Layers
+- [x] Import Supplier JSON data
 
-### Import / Export (Main Criteria)
-
-- [ ] **Export by Supplier**
-    - Must include: Supplier + all related Layups + all related Layers
-
-- [ ] **Import by Supplier**
-    - Must create and/or update Layups and Layers under the specified supplier
-
-Format is flexible (JSON / CSV / Excel, etc.). JSON format is completely acceptable.
-
-## 3. Feature: Conflict Resolution (Bonus – Important)
-
-During import, conflicts may occur when incoming data differs from existing records.
-
-### Conflict Detection Rules
-
-#### 1. Layup-Level Conflict
-
-If a layup with the same `name` already exists under the same supplier:
-
-- Treat it as the same layup candidate.
-- Do **not** automatically create a new layup.
-
-#### 2. Layer-Level Conflict
-
-If:
-
-- A layer with the same `layer_order` exists within that layup,
-- **AND** one or more fields differ (`thickness`, `width`, `angle`),
-
-→ This must be treated as a conflict.
+Format used:
+- JSON
 
 ---
 
-### Required Conflict Handling
+## Conflict Resolution
 
-You must implement a clearly defined conflict resolution strategy.
+Implemented strategy:
 
-At minimum, support **one** of the following:
+- [x] Overwrite Existing
 
-- **Overwrite Existing**  
-  (Incoming data replaces current data)
-
-- **Skip Conflict**  
-  (Keep current data, ignore incoming change)
-
-- **Duplicate Layup**  
-  (Create a new layup with a suffix such as `name (imported)`)
-
-- **Reject Entire Import**  
-  (Abort and return a detailed conflict report)
+Rules:
+- Existing layer detected by:
+  - same layup
+  - same layer_order
+- If thickness/width/angle differs:
+  - existing data will be overwritten
 
 ---
 
-### Advanced Conflict Resolution (UI-Based – Bonus)
+# Tech Stack
 
-For additional bonus points, implement a **manual conflict resolution interface** similar to GitHub merge conflict resolution.
+- Laravel 12
+- SQLite
+- Tailwind CSS
 
-Expected behavior:
+---
 
-- Display **Existing Version (Current Data)** and  
-  **Incoming Version (Imported Data)** side-by-side
-- Highlight field-level differences
-- Allow the user to choose:
-    - ✅ Keep Existing
-    - ✅ Accept Incoming
-- Support resolving conflicts one-by-one
-- Provide navigation (e.g., “1 of 3 discrepancies”)
+# Database Structure
 
-This may be implemented as:
+Supplier
+- hasMany Layups
 
-- A modal, or
-- A dedicated conflict resolution page.
+Layup
+- belongsTo Supplier
+- hasMany Layers
 
-## 4. Design Reference
+Layer
+- belongsTo Layup
 
-A design reference is available in Figma:
+---
 
-[Figma Design File](https://www.figma.com/design/odWJ887r00aslmSFPIHMCx/SPEC-Toolbox---Feature-Test?node-id=11001-35&t=XUggOaUUi9p8jGFG-1)
+# Installation
 
-> The design is for reference only. Exact visual matching is not required.
+## Clone Repository
 
-## 5. Evaluation Criteria
+```bash
+git clone <repository-url>
+```
 
-### Main Evaluation
+## Install Dependencies
 
-- Correct implementation of the required features
+```bash
+composer install
+npm install
+```
 
-### Bonus Evaluation
+## Setup Environment
 
-**Architecture & Design Patterns**
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-- Use Repository and/or Service pattern
-- Bind interfaces via a Service Provider
+## SQLite Setup
 
-**Laravel Best Practices**
+Create file:
 
-- Form Request validation
-- Policies or Gates for authorization
-- Proper use of Route Model Binding
-- Clean, maintainable code following Laravel conventions
+```text
+database/database.sqlite
+```
 
-**Automated Testing**
+Update `.env`:
 
-- Unit tests (validation, services, repositories)
-- Feature tests (CRUD and import/export flows)
+```env
+DB_CONNECTION=sqlite
+DB_DATABASE=database/database.sqlite
+```
 
-**Additional Improvements**
+## Run Migration
 
-- Any meaningful enhancements will be considered positively
+```bash
+php artisan migrate
+```
 
-## 6. Submission
+## Run Application
 
-The deadline will be provided via email.  
-Please ensure submission within the specified timeframe.
+```bash
+php artisan serve
+npm run dev
+```
 
+---
 
-## 7. Demo
+# Export Feature
 
-Include one of the following with your submission:
+Export includes:
+- Supplier
+- Related Layups
+- Related Layers
 
-- A demo video (recommended), or
-- A live project link
+---
 
-Ensure the demo clearly showcases:
+# Import Feature
 
-- CRUD functionality
-- Import / Export feature
-- Conflict resolution behavior
+Import supports:
+- create layups
+- create layers
+- overwrite existing layer conflicts
+
+---
+
+# Demo
+
+Demo video:
+(Add demo video link here)

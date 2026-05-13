@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <title>Create Layup</title>
-</head>
-<body class="bg-gray-100 p-10">
+@extends('layouts.app')
+
+@section('content')
 
 <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow">
 
@@ -68,5 +64,4 @@
 
 </div>
 
-</body>
-</html>
+@endsection

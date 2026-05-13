@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Supplier;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreSupplierRequest;
+use App\Http\Requests\UpdateSupplierRequest;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
@@ -20,13 +22,8 @@ class SupplierController extends Controller
         return view('suppliers.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreSupplierRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'address' => 'nullable'
-        ]);
-
         Supplier::create($request->all());
 
         return redirect()->route('suppliers.index');
@@ -37,13 +34,11 @@ class SupplierController extends Controller
         return view('suppliers.edit', compact('supplier'));
     }
 
-    public function update(Request $request, Supplier $supplier)
+    public function update(
+    UpdateSupplierRequest $request,
+    Supplier $supplier
+    )
     {
-        $request->validate([
-            'name' => 'required',
-            'address' => 'nullable'
-        ]);
-
         $supplier->update($request->all());
 
         return redirect()->route('suppliers.index');

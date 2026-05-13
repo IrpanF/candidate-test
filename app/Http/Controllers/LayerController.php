@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Layer;
 use App\Models\Layup;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreLayerRequest;
+use App\Http\Requests\UpdateLayerRequest;
 use Illuminate\Http\Request;
 
 class LayerController extends Controller
@@ -23,16 +25,8 @@ class LayerController extends Controller
         return view('layers.create', compact('layups'));
     }
 
-    public function store(Request $request)
+    public function store(StoreLayerRequest $request)
     {
-        $request->validate([
-            'layup_id' => 'required',
-            'layer_order' => 'required|integer',
-            'thickness' => 'required|numeric',
-            'width' => 'required|numeric',
-            'angle' => 'required|numeric',
-        ]);
-
         Layer::create($request->all());
 
         return redirect()->route('layers.index');
@@ -45,16 +39,11 @@ class LayerController extends Controller
         return view('layers.edit', compact('layer', 'layups'));
     }
 
-    public function update(Request $request, Layer $layer)
+    public function update(
+    UpdateLayerRequest $request,
+    Layer $layer
+    )
     {
-        $request->validate([
-            'layup_id' => 'required',
-            'layer_order' => 'required|integer',
-            'thickness' => 'required|numeric',
-            'width' => 'required|numeric',
-            'angle' => 'required|numeric',
-        ]);
-
         $layer->update($request->all());
 
         return redirect()->route('layers.index');

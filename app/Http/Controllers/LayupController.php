@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Layup;
 use App\Models\Supplier;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreLayupRequest;
+use App\Http\Requests\UpdateLayupRequest;
 use Illuminate\Http\Request;
 
 class LayupController extends Controller
@@ -23,14 +25,8 @@ class LayupController extends Controller
         return view('layups.create', compact('suppliers'));
     }
 
-    public function store(Request $request)
+    public function store(StoreLayupRequest $request)
     {
-        $request->validate([
-            'supplier_id' => 'required',
-            'name' => 'required',
-            'description' => 'nullable'
-        ]);
-
         Layup::create($request->all());
 
         return redirect()->route('layups.index');
@@ -43,14 +39,11 @@ class LayupController extends Controller
         return view('layups.edit', compact('layup', 'suppliers'));
     }
 
-    public function update(Request $request, Layup $layup)
+    public function update(
+    UpdateLayupRequest $request,
+    Layup $layup
+    )
     {
-        $request->validate([
-            'supplier_id' => 'required',
-            'name' => 'required',
-            'description' => 'nullable'
-        ]);
-
         $layup->update($request->all());
 
         return redirect()->route('layups.index');

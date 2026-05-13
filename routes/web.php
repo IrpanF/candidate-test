@@ -8,7 +8,7 @@ use App\Http\Controllers\LayerController;
 use App\Http\Controllers\SupplierTransferController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts.app');
 });
 
 Route::get('/dashboard', function () {

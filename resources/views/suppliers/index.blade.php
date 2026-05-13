@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <title>Suppliers</title>
-</head>
-<body class="bg-gray-100 p-10">
+@extends('layouts.app')
 
-<div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow">
+@section('content')
+
+<div class="max-w-5xl mx-auto bg-white p-6 rounded-lg shadow">
 
     <div class="flex justify-between items-center mb-6">
         <h1 class="text-3xl font-bold">
@@ -113,5 +109,4 @@
 
 </div>
 
-</body>
-</html>
+@endsection
