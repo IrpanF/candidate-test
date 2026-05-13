@@ -42,6 +42,13 @@
                     Edit
                 </a>
 
+                <a
+                    href="{{ route('suppliers.export', $supplier) }}"
+                    class="bg-green-500 text-white px-3 py-1 rounded"
+                >
+                    Export
+                </a>
+
                 <form
                     action="{{ route('suppliers.destroy', $supplier) }}"
                     method="POST"

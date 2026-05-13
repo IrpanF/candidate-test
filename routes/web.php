@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\LayupController;
 use App\Http\Controllers\LayerController;
+use App\Http\Controllers\SupplierTransferController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,5 +24,15 @@ Route::middleware('auth')->group(function () {
 Route::resource('suppliers', SupplierController::class);
 Route::resource('layups', LayupController::class);
 Route::resource('layers', LayerController::class);
+
+Route::get(
+    '/suppliers/{supplier}/export',
+    [SupplierTransferController::class, 'export']
+)->name('suppliers.export');
+
+Route::post(
+    '/suppliers/import',
+    [SupplierTransferController::class, 'import']
+)->name('suppliers.import');
 
 require __DIR__.'/auth.php';
